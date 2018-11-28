@@ -9,7 +9,7 @@ model queen
 
 global {
     int NB_GRID_NEIGHBORS <- 8;
-    int NB_QUEENS <- 12;
+    int NB_QUEENS <- 4;
     
     init{
         create Queen number: NB_QUEENS;
@@ -34,7 +34,7 @@ global {
     }
     
     reflex calculateGlobalOccupancyGrid{
-    	write "=================updating========================";
+    	write "Updating...";
         do refreshGlobalOccupancyGrid;
         
         // Identify all occupied cells
@@ -105,8 +105,9 @@ species Queen{
     ChessBoardCell myCell <- one_of (ChessBoardCell);
     list<list<int>> occupancy_grid;
     
-    file queen_icon <- file("../images/supermario.png");
-    file laser_icon <- file("../images/laser.png");
+    file queen_icon <- file("../images/queen_icon2.png");
+//    file queen_icon <- file("../images/queen_icon.png");
+//    file queen_icon <- file("../images/supermario.png");
     
     init {
         //Assign a free cell
@@ -334,8 +335,8 @@ grid ChessBoardCell width: NB_QUEENS height: NB_QUEENS neighbors: NB_GRID_NEIGHB
     list<ChessBoardCell> neighbours  <- (self neighbors_at 2);
     Queen queen <- nil;
     
-    rgb color <- rgb(125,125,125) update: rgb( 
-    	255 - int(255.0 * (float(global_occupancy_grid[self.grid_x][self.grid_y]))/float(NB_QUEENS+2) ),
+    rgb color <- rgb(255,0,0) update: rgb( 
+    	255,
     	255 - int(255.0 * (float(global_occupancy_grid[self.grid_x][self.grid_y]))/float(NB_QUEENS+2) ),
     	255 - int(255.0 * (float(global_occupancy_grid[self.grid_x][self.grid_y]))/float(NB_QUEENS+2) ));
     
@@ -354,7 +355,7 @@ grid ChessBoardCell width: NB_QUEENS height: NB_QUEENS neighbors: NB_GRID_NEIGHB
 experiment ChessBoard type: gui {
     output {
         display main_display {
-            grid ChessBoardCell lines: #black ;
+            grid ChessBoardCell lines: #black;
             species Queen aspect: icon ;
         }
     }
